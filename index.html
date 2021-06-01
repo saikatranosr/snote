@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <title>Notes App</title>
+
+</head>
+
+<body>
+
+   <nav class="navbar navbar-dark bg-dark px-2">
+  <a class="navbar-brand">S Note</a>
+  <form class="form-inline" onsubmit="return false">
+    <input id="searchTxt" class="form-control mr-sm-2" type="search" placeholder="Search notes..." aria-label="Search">
+   </form>
+</nav>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmMsg"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        This can't be recovered
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-sm btn-danger" onclick="deleteNote(); deleteModal.hide()">Delete</button> 
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Alert-->
+<div class="alert alert-danger align-items-center" role="alert" style="display: none;" id="alert">
+  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+  <div>
+    Note description cannot be empty
+  </div>
+</div>
+<!--Toast-->
+<div id="deleteToastCont" class="position-fixed bottom-0 end-0 p-3" style="z-index: 5; display: none;">
+<div id="deleteToast" class="deleteToast toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+  <div class="d-flex">
+    <div class="toast-body">
+      Item deleted
+    </div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+</div>
+</div>
+<!--Toast 2-->
+<div id="addToastCont" class="position-fixed bottom-0 end-0 p-3" style="z-index: 5; display: none;">
+<div id="addToast" class="addToast toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+  <div class="d-flex">
+    <div class="toast-body">
+      Item added
+    </div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+</div>
+</div>
+
+<!--Main Body-->
+<!--Add Notes-->
+    <div id="addNoteCont" class="container my-3">
+        <div id="headingText"><h2>Welcome to S Note</h2></div>
+        <div id="addNoteCard" class="card">
+            <div class="card-body">
+                <h5 class="card-title">Add a note</h5>
+                <div class="form-group">
+                  <label for="addTitle">Note Title</label>
+                    <input type="text" class="form-control" id="addTitle" rows="3">
+                </div>
+                <div class="form-group">
+                  <label for="addTxt">Note description</label>
+                    <textarea class="form-control" style="font-size: 1em;" id="addTxt" rows="3"></textarea>
+                </div>
+                <button class="btn btn-success mt-3 ml-3" id="addBtn">Add Note</button>
+            </div>
+        </div>
+        <hr>
+       <!--My Notes-->
+        <h3 id="yourNotesTxt" class="display-4">Your Notes</h3>
+        <div id="notes" class="row justify-content-center container-fluid"> </div>
+    </div>
+    
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+   <script src="app.js" type="text/javascript" charset="utf-8"></script>
+</body>
+
+</html>
