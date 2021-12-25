@@ -1,6 +1,8 @@
+//VARIABLES--------------------------------------------------------------------------------------
 
-// console.log("Welcome to notes app. This is app.js");
 let warning = document.getElementById('alert');
+let addBtn = document.getElementById("addBtn");
+
 // Modal
 let deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'), {keyboard: false})
 //Toast
@@ -15,46 +17,8 @@ var addToastElList = [].slice.call(document.querySelectorAll('.addToast'))
           return new bootstrap.Toast(toastEl) // No need for options; use the default options
         });
 
-   
 
-showNotes();
-
-// If user adds a note, add it to the localStorage
-let addBtn = document.getElementById("addBtn");
-
-addBtn.addEventListener("click", function(e) {
-  let addTitle = document.getElementById("addTitle");
-  let addTxt = document.getElementById("addTxt");
-  let notes = localStorage.getItem("notes");
-  if (notes == null) {
-    notesObj = [];
-  } else {
-    notesObj = JSON.parse(notes);
-  }
-  if (addTitle.value =="") {
-    addTitle.value = "Note " + String(notesObj.length +1);
-  }
-  if(addTxt.value == ""){
-    warning.style.display = "flex"
-    
-  } else{
-  notesObj.push({title: addTitle.value, desc: addTxt.value});
-  localStorage.setItem("notes", JSON.stringify(notesObj));
-  addTxt.value = "";
-  addTitle.value = "";
-//   console.log(notesObj);
-    warning.style.display = "none"
-  showNotes();
-  document.getElementById("addToastCont").style.display = "block";
-  addToast.forEach(toast => toast.show()); // 
-
-}});
-
-
-        // console.log(toastList); // Testing to see if it works
-      
-
-// deleteToast.show()
+//FUNCTIONS--------------------------------------------------------------------------------------
 // Function to show elements from localStorage
 function showNotes() {
   let notes = localStorage.getItem("notes");
@@ -110,10 +74,38 @@ function deleteNote() {
   deleteToast.forEach(toast => toast.show()); // 
 }
 
-// Filtering Elements
-let search = document.getElementById('searchTxt');
-search.addEventListener("input", function(){
+// FUNCTION FOR ADDING A NOTE
+function addNote(){
+  let addTitle = document.getElementById("addTitle");
+  let addTxt = document.getElementById("addTxt");
+  let notes = localStorage.getItem("notes");
+  if (notes == null) {
+    notesObj = [];
+  } else {
+    notesObj = JSON.parse(notes);
+  }
+  if (addTitle.value =="") {
+    addTitle.value = "Note " + String(notesObj.length +1);
+  }
+  if(addTxt.value == ""){
+    warning.style.display = "flex"
+    
+  } else{
+  notesObj.push({title: addTitle.value, desc: addTxt.value});
+  localStorage.setItem("notes", JSON.stringify(notesObj));
+  addTxt.value = "";
+  addTitle.value = "";
+//   console.log(notesObj);
+    warning.style.display = "none"
+  showNotes();
+  document.getElementById("addToastCont").style.display = "block";
+  addToast.forEach(toast => toast.show()); // 
 
+}}
+
+// FUNCTION TO SEARCH A NOTE
+function searchNote(){
+    let search = document.getElementById('searchTxt');
     let inputVal = search.value.toLowerCase();
     // console.log('Input event fired!', inputVal);
     let noteCards = document.getElementsByClassName('noteCard');
@@ -134,12 +126,14 @@ search.addEventListener("input", function(){
         }
         // console.log(cardTxt);
     })
-})
+}
 
-/*
-Further Features:
-1. Add Title (Done)
-2. Mark a note as Important
-3. Separate notes by user
-4. Sync and host to web server 
-*/ 
+//MAIN()------------------------------------------------------------------------------
+   
+//lOADING ALL NOTES ON STATUP
+showNotes();
+
+addBtn.addEventListener("click", addNote);
+  
+// Filtering Elements
+search.addEventListener("input", searchNote)
